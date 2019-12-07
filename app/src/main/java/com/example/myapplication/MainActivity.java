@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                float Vsx,Vdx, beta;
+                float alfa;
                 int vel = 1;
                 float currVel = 0, nextVel = 0;
 
@@ -29,20 +32,33 @@ public class MainActivity extends AppCompatActivity {
                 ProgressBar ruotaDX = Elementi.ruotaDX;
 
                 while(true){
+                    try {
+                        Thread.sleep(25);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                     currVel = nextVel;
                     nextVel = currVel + vel*Elementi.acceleration;
 
                     if(nextVel < ruotaSX.getMin())nextVel = ruotaSX.getMin();
                     else if(nextVel > ruotaSX.getMax()) nextVel = ruotaSX.getMax();
 
-                    ruotaSX.setProgress((int)nextVel);
-                    ruotaDX.setProgress((int)nextVel);
+                    alfa = Elementi.angle;
 
-                    try {
-                        Thread.sleep(25);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    if(alfa < 0) continue;
+
+                    alfa -= Elementi.discretizzazione/2;
+                    beta = (2.0f*(int)alfa)/(Elementi.discretizzazione-1);
+
+                    Log.d("test","beta "+beta);
+                    Vsx = beta*nextVel;
+                    Vdx = -Vsx;
+
+                    ruotaSX.setProgress((int)(nextVel + Vsx));
+                    ruotaDX.setProgress((int)(nextVel + Vdx));
+
+
 
                 }
             }

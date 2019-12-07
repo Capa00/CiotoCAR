@@ -7,7 +7,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +15,7 @@ import android.widget.SeekBar;
 public class Elementi {
     static Button acc,dec;
     static SeekBar ruotaSX, ruotaDX;
-
+    static int discretizzazione = 20;
     static float acceleration = 0;
     static float angle;
     static SensorManager sensorManager;
@@ -24,7 +23,7 @@ public class Elementi {
     private static float attrito = 0;//-0.15f;
 
     public static void update(Activity activity){
-        DisplayMetrics displayMetrics = new DisplayMetrics();
+        final DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         // LISTENER BOTTONI
@@ -58,6 +57,7 @@ public class Elementi {
                 if(event.getAction() == MotionEvent.ACTION_UP) {
                     acceleration = attrito;
                     return false;
+
                 }
 
                 return true;
@@ -99,10 +99,9 @@ public class Elementi {
                 SensorManager.remapCoordinateSystem(rotationMatrix, worldAxisX, worldAxisZ, adjustedRotationMatrix);
                 float[] orientation = new float[3];
                 SensorManager.getOrientation(adjustedRotationMatrix, orientation);
-                float pitch = orientation[1] * (float)(20/Math.PI);
-                float roll = orientation[2] * (float)(20/Math.PI);
+                float pitch = orientation[1] * (float)(discretizzazione/Math.PI);
+                angle = orientation[2] * (float)(discretizzazione/Math.PI);
 
-                Log.i("pitch",""+((roll)));
                 //((TextView)findViewById(R.id.pitch)).setText("Pitch: "+pitch);
                 //((TextView)findViewById(R.id.roll)).setText("Roll: "+roll);
 

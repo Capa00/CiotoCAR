@@ -16,6 +16,7 @@ public class Elementi {
     static Button acc,dec;
     static SeekBar ruotaSX, ruotaDX;
     static int discretizzazione = 20;
+    static int velMax = 100;
     static float acceleration = 0;
     static float angle;
     static SensorManager sensorManager;
@@ -66,11 +67,11 @@ public class Elementi {
 
         ruotaSX = activity.findViewById(R.id.ruotaSX);
         ruotaSX.setMin(0);
-        ruotaSX.setMax(100);
+        ruotaSX.setMax(velMax);
 
         ruotaDX = activity.findViewById(R.id.ruotaDX);
         ruotaDX.setMin(0);
-        ruotaDX.setMax(100);
+        ruotaDX.setMax(velMax);
 
         //GIROSCOPIO
         sensorManager = (SensorManager) activity.getSystemService(Context.SENSOR_SERVICE);

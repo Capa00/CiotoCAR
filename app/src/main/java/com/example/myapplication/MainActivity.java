@@ -25,13 +25,17 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 float Vsx,Vdx, beta;
                 float alfa;
-                int vel = 1;
+                int vel = 1, maxVel = Elementi.velMax;
                 float currVel = 0, nextVel = 0;
+                float prevAlfa = Elementi.angle;
 
                 ProgressBar ruotaSX = Elementi.ruotaSX;
                 ProgressBar ruotaDX = Elementi.ruotaDX;
 
                 while(true){
+                    alfa = Elementi.angle;
+                    if(alfa < 0) alfa = prevAlfa;
+                    prevAlfa = alfa;
                     try {
                         Thread.sleep(25);
                     } catch (InterruptedException e) {
@@ -40,13 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
                     currVel = nextVel;
                     nextVel = currVel + vel*Elementi.acceleration;
+                    if(nextVel > maxVel)nextVel = maxVel;
+                    else if(nextVel < 0)nextVel = 0;
 
-                    if(nextVel < ruotaSX.getMin())nextVel = ruotaSX.getMin();
-                    else if(nextVel > ruotaSX.getMax()) nextVel = ruotaSX.getMax();
 
-                    alfa = Elementi.angle;
-
-                    if(alfa < 0) continue;
 
                     alfa -= Elementi.discretizzazione/2;
                     beta = (2.0f*(int)alfa)/(Elementi.discretizzazione-1);
@@ -55,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
                     Vsx = beta*nextVel;
                     Vdx = -Vsx;
 
+                    if(nextVel + Vsx < ruotaSX.getMin())Vsx = nextVel;
+                    else if(nextVel + Vsx > ruotaSX.getMax()) Vsx = maxVel-nextVel;
+
+                    if(nextVel + Vdx < ruotaDX.getMin())Vdx = nextVel;
+                    else if(nextVel + Vdx > ruotaDX.getMax()) Vdx = maxVel-nextVel;
+
+                    Log.i("prova", "run: alfa "+alfa);
+                    Log.i("prova", "run: vsx "+Vsx);
+                    Log.i("prova", "run: vdx "+Vdx);
                     ruotaSX.setProgress((int)(nextVel + Vsx));
                     ruotaDX.setProgress((int)(nextVel + Vdx));
 

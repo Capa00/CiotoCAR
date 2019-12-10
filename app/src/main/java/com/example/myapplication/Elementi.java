@@ -21,6 +21,8 @@ public class Elementi {
     static float angle;
     static SensorManager sensorManager;
     static Sensor giroscopio;
+    static boolean retro = false;
+    static String ipModulo = "192.168.43.71";
     private static float attrito = 0;//-0.15f;
 
     public static void update(Activity activity){
@@ -66,10 +68,12 @@ public class Elementi {
         });
 
         ruotaSX = activity.findViewById(R.id.ruotaSX);
+        ruotaSX.setFocusable(false);
         ruotaSX.setMin(0);
         ruotaSX.setMax(velMax);
 
         ruotaDX = activity.findViewById(R.id.ruotaDX);
+        ruotaDX.setFocusable(false);
         ruotaDX.setMin(0);
         ruotaDX.setMax(velMax);
 

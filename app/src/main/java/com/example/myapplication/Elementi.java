@@ -29,6 +29,7 @@ public class Elementi {
     static Sensor giroscopio;
     static boolean retro = false;
     static String
+            marcio,
             ipModulo = "192.168.43.71",
             marciaA = "> > > > > > >",
             marciaR = "< < < < < < <";

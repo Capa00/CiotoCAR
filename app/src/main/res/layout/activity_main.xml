@@ -23,16 +23,29 @@
         android:layout_weight="0.3">
 
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="> > > > > >"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/ruotaDX"
+            app:layout_constraintEnd_toStartOf="@+id/nos"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ruotaSX" />
+
         <SeekBar
             android:id="@+id/ruotaDX"
-            android:layout_width="500px"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <SeekBar
             android:id="@+id/ruotaSX"
-            android:layout_width="500px"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ruotaDX"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,24 +54,25 @@
 
         <Button
             android:id="@+id/nos"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Button"
+            android:layout_width="80dp"
+            android:layout_height="160dp"
+            android:background="@drawable/nos"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/retro" />
-
+            app:layout_constraintEnd_toStartOf="@+id/retro"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <Button
             android:id="@+id/retro"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="80dp"
+            android:layout_height="160dp"
+            android:layout_weight="1"
+            android:background="@drawable/retro"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Button"/>
-
-
-
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

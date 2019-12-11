@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.AdaptiveIconDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,12 +13,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import static com.example.myapplication.MainActivity.TAG;
 
 public class Elementi {
-    static Button acc,dec;
+    static Button acc,dec,ret,turbo;
     static SeekBar ruotaSX, ruotaDX;
+    static TextView marcia;
     static int discretizzazione = 20;
     static int velMax = 1000;
     static float acceleration = 0;
@@ -25,11 +28,25 @@ public class Elementi {
     static SensorManager sensorManager;
     static Sensor giroscopio;
     static boolean retro = false;
-    static String ipModulo = "192.168.43.71";
+    static String
+            ipModulo = "192.168.43.71",
+            marciaA = "> > > > > > >",
+            marciaR = "< < < < < < <";
     private static float attrito = 0;//-0.2f;
 
     public static void update(Activity activity){
         // LISTENER BOTTONI
+        marcia = activity.findViewById(R.id.textView);
+
+        ret = activity.findViewById(R.id.retro);
+        ret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                retro = !retro;
+                if(retro)marcia.setText(marciaR);
+                else marcia.setText(marciaA);
+            }
+        });
         dec = activity.findViewById(R.id.brk);
         dec.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -43,8 +60,6 @@ public class Elementi {
                     acceleration = attrito;
                     return false;
                 }
-                Log.d(TAG, "BRK: ok");
-
                 return true;
             }
         });
@@ -63,7 +78,6 @@ public class Elementi {
                     return false;
 
                 }
-
                 return true;
             }
         });

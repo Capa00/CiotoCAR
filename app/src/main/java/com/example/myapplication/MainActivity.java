@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     if(alfa < 0) alfa = prevAlfa;
                     prevAlfa = alfa;
                     try {
-                        Thread.sleep(3);
+                        Thread.sleep(25);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                     rq.setParam("x",""+ruotaSX.getProgress());
                     rq.setParam("y",""+ruotaDX.getProgress());
                     getData(rq);
+
                 }
             }
         }).start();

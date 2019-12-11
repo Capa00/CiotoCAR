@@ -1,55 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
+
+    <Button
+        android:id="@+id/brk"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/freno"
+        android:layout_weight="1"
+        android:text="" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3">
+
+
+        <SeekBar
+            android:id="@+id/ruotaDX"
+            android:layout_width="500px"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <SeekBar
+            android:id="@+id/ruotaSX"
+            android:layout_width="500px"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ruotaDX"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Button
+            android:id="@+id/nos"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/retro" />
+
+
+
+        <Button
+            android:id="@+id/retro"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Button"/>
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/acc"
-        android:layout_width="381dp"
-        android:layout_height="417dp"
-        android:background="@android:color/transparent"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/dec"
-        android:layout_width="352dp"
-        android:layout_height="415dp"
-        android:background="@android:color/transparent"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <SeekBar
-        android:id="@+id/ruotaSX"
-        android:layout_width="248dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="116dp"
-        android:layout_marginLeft="116dp"
-        android:layout_marginBottom="112dp"
-        android:rotation="-90"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <SeekBar
-        android:id="@+id/ruotaDX"
-        android:layout_width="248dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="388dp"
-        android:layout_marginLeft="388dp"
-        android:layout_marginBottom="112dp"
-        android:rotation="-90"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:background="@drawable/accel"
+        android:text="" >
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </Button>
+
+</LinearLayout>

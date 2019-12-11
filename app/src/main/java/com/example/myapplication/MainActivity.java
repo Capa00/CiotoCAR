@@ -46,35 +46,9 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                /*
-                try {
-                    url = new URL("http://"+ Elementi.ipModulo+"/forward?x=1000&y=1000");
-                    do {
-                        urlConnection = (HttpURLConnection) url.openConnection();
-                        Log.d(TAG, "conn: connection....");
-                    }while(urlConnection == null);
-                    Log.d(TAG, "conn: connected");
-                    urlConnection.setRequestMethod("GET");
-                    urlConnection.setDoOutput(true);
-                    urlConnection.setRequestProperty("Content-Type", "forward");
-                    out = new DataOutputStream(urlConnection.getOutputStream());
-                    Log.d(TAG, "conn: "+out);
-
-                    connected = true;
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                 */
-            }
-        }).start();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
                 float Vsx,Vdx, beta;
                 float alfa;
-                int vel = 1, maxVel = Elementi.velMax;
+                int vel = 50, maxVel = Elementi.velMax;
                 float currVel = 0, nextVel = 0;
                 float prevAlfa = Elementi.angle;
 
@@ -86,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     if(alfa < 0) alfa = prevAlfa;
                     prevAlfa = alfa;
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(3);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -99,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     alfa -= Elementi.discretizzazione/2;
-                    beta = (2.0f*(int)alfa)/(Elementi.discretizzazione-1);
+                    beta = (2.0f*(int)alfa)/(Elementi.discretizzazione);
 
                     Vsx = beta*nextVel;
                     Vdx = -Vsx;
@@ -118,39 +92,10 @@ public class MainActivity extends AppCompatActivity {
                     rq.setUrl("http://"+ Elementi.ipModulo+"/forward");
                     rq.setParam("x",""+ruotaSX.getProgress());
                     rq.setParam("y",""+ruotaDX.getProgress());
+                    getData(rq);
                 }
             }
         }).start();
-        //button.setOnClickListener(new View.OnClickListener() {
-        //    public void onClick(View view) {
-        //        x+=0.5;
-        //        v+=x;
-        //        if(v>50){
-        //            v=50;
-        //        }
-        //        progressBar.setProgress((int)v);
-        //    }
-        //});
-
-
-
-    }
-
-    public static String getParamsString(Map<String, String> params)
-            throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-            result.append("&");
-        }
-
-        String resultString = result.toString();
-        return resultString.length() > 0
-                ? resultString.substring(0, resultString.length() - 1)
-                : resultString;
     }
 
     public static String getData(RequestPackage requestPackage) {
@@ -171,8 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (requestPackage.getMethod().equals("POST")) {
                 con.setDoOutput(true);
-                OutputStreamWriter writer =
-                        new OutputStreamWriter(con.getOutputStream());
+                OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());
                 writer.write(requestPackage.getEncodedParams());
                 writer.flush();
             }

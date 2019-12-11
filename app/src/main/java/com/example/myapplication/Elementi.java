@@ -7,35 +7,35 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 
+import static com.example.myapplication.MainActivity.TAG;
+
 public class Elementi {
     static Button acc,dec;
     static SeekBar ruotaSX, ruotaDX;
     static int discretizzazione = 20;
-    static int velMax = 100;
+    static int velMax = 1000;
     static float acceleration = 0;
     static float angle;
     static SensorManager sensorManager;
     static Sensor giroscopio;
     static boolean retro = false;
     static String ipModulo = "192.168.43.71";
-    private static float attrito = 0;//-0.15f;
+    private static float attrito = 0;//-0.2f;
 
     public static void update(Activity activity){
-        final DisplayMetrics displayMetrics = new DisplayMetrics();
-        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
         // LISTENER BOTTONI
-        dec = activity.findViewById(R.id.dec);
+        dec = activity.findViewById(R.id.brk);
         dec.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View vi, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    acceleration = 1;
+                    acceleration = -1.3f;
                     return false;
                 }
 
@@ -43,6 +43,7 @@ public class Elementi {
                     acceleration = attrito;
                     return false;
                 }
+                Log.d(TAG, "BRK: ok");
 
                 return true;
             }
@@ -53,7 +54,7 @@ public class Elementi {
             @Override
             public boolean onTouch(View vi, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    acceleration = -1.3f;
+                    acceleration = 1;
                     return false;
                 }
 

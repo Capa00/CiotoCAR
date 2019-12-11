@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     rq.setParam("y",""+ruotaDX.getProgress());
                     getData(rq);
 
+
                 }
             }
         }).start();

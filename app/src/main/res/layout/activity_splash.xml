@@ -1,0 +1,4 @@
+<!--suppress AndroidDomInspection -->
+<androidx.appcompat.widget.LinearLayoutCompat android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:background="#1e2121">
+<ImageView android:id="@+id/imageView" android:layout_width="wrap_content" android:layout_height="wrap_content" app:srcCompat="@drawable/splash" android:rotation="90"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,85 @@
+
+#include <ESP8266WebServer.h>
+#include <WiFiClient.h>
+#include <ESP8266WiFi.h>
+
+//dichiarazione funzioni
+void handleroot();
+void pwm(int pin,int x);
+
+const char* ssid = "HUAWEI P9 PLUS";
+const char* psw = "9012345678";
+
+const int pin1 = 14;  //D2
+const int pin2 = 12;  //D6
+int z=1;
+int x, y;
+
+
+ESP8266WebServer server (80);
+
+void setup() {
+  pinMode(pin1,OUTPUT);
+  pinMode(pin2,OUTPUT);
+
+  Serial.begin(115200);
+  Serial.println();
+  Serial.print("connect to:");
+  Serial.println(ssid);
+  WiFi.begin(ssid,psw);
+  while( WiFi.status() != WL_CONNECTED ){
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("CONNESSO");
+  Serial.println(WiFi.localIP());
+
+  server.begin();
+  server.on("/",handleroot);                //metodi per richiamare le funzioni
+  server.on("/forward",handleforward);      // "" 
+
+
+
+}
+
+void loop() {
+server.handleClient();
+}
+
+
+void handleroot (){
+  z=0;
+  server.send(200, "text/plain","OK");  //"OK" è il messaggio che appparirà su "internet"
+  Serial.println("OK (seriale)");
+}
+
+void handleforward (){
+  String message = "";                    //creo una stringa message dove inserirò le variabili
+  if(server.hasArg("x")){                 //contrtollo se sia arrivata la variabile "x"
+    const String x1 = server.arg("x");    //in caso affermativo x1 prenderà il valorre passato
+    x = x1.toInt();                 
+    Serial.println(x);
+    message+=x;                           //alla stringa vuota vado ad aggiungere il valore di x
+    message+=";";
+  }
+  if(server.hasArg("y")){
+    const String y1 = server.arg("y");
+    y=y1.toInt();
+    Serial.println(y);
+    message+=y;
+  }
+  message+="\n";
+  server.send(200, "text/plain",message); //messaggio di risposta del server
+  z=1;
+  while(z){                               //ciclo del PWM
+    pwm(pin1,x);
+    server.handleClient();
+  }
+}
+
+void pwm(int pin, int x){
+  digitalWrite(pin,HIGH);
+  delayMicroseconds(x*100);
+  digitalWrite(pin,LOW);
+  delayMicroseconds(1000-(x*100)); 
+}
